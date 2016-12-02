@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public class NewsActivity extends AppCompatActivity {
 
-    public static final String LOG_TAG = NewsActivity.class.getName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +16,7 @@ public class NewsActivity extends AppCompatActivity {
 
         //Creating a fake list of news items
         ArrayList<String> news = new ArrayList<>();
-        news.add("Main");
+        news.add(new News("Main", "John Doe", "Dec 1 2016", "URL"));
         news.add("Entertainment");
         news.add("Politics");
         news.add("Sports");
@@ -29,9 +27,7 @@ public class NewsActivity extends AppCompatActivity {
         ListView newsListView = (ListView) findViewById(R.id.list);
 
         //Create a new list of news items
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, news
-        );
+
 
         //Set the adapter so the list can be populated in the user interface
         newsListView.setAdapter(adapter);
