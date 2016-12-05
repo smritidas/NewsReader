@@ -10,7 +10,7 @@ public class News {
     private String mTitle;
 
     //The author of the news article
-    private String mAuthor;
+    private String mType;
 
     //The date the article was published
     private String mDate;
@@ -21,14 +21,14 @@ public class News {
     /**
      * This is the constructor for the news object
      * @param title
-     * @param author
+     * @param type
      * @param date
      * @param URL
      */
 
-    public News(String title, String author, String date, String URL){
+    public News(String title, String type, String date, String URL){
         mTitle= title;
-        mAuthor= author;
+        mType= type;
         mDate = date;
         mURL = URL;
     }
@@ -37,16 +37,16 @@ public class News {
         return mTitle;
     }
 
-    public String getAuthor(){
-        return mAuthor;
+    public String getType(){
+        return mType;
     }
 
     public String getDate(){
         return mDate;
     }
 
-    public String getURL(){
+
+    public String getUrl() {
         return mURL;
     }
-
 }
