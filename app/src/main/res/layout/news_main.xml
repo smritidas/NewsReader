@@ -19,7 +19,7 @@
         android:layout_centerInParent="true"
         android:textAppearance="?android:textAppearanceMedium"/>
 
-    <!-- Loading indicator for user feedback between queries to NEWS -->
+    <!-- Loading indicator for user feedback between queries to News Items -->
     <ProgressBar
         android:id="@+id/loading_indicator"
         style="@style/Widget.AppCompat.ProgressBar"
