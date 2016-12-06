@@ -17,8 +17,8 @@ public class NewsAdapter extends ArrayAdapter<News> {
     }
 
     @Override
-    public View getView(int position, View convertview, ViewGroup parent){
-        View listItemView = convertview;
+    public View getView(int position, View convertView, ViewGroup parent){
+        View listItemView = convertView;
         if (listItemView == null){
         listItemView = LayoutInflater.from(getContext()).inflate(
                 R.layout.news_list_item, parent, false);
@@ -30,10 +30,6 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
         TextView typeView = (TextView) listItemView.findViewById(R.id.type);
         typeView.setText(currentNews.getType());
-
-        TextView dateView = (TextView) listItemView.findViewById(R.id.date);
-        dateView.setText(currentNews.getDate());
-
 
         return listItemView;
 }}

@@ -28,7 +28,7 @@ public class QueryUtils {
 
     }
 
-    public static List<News> fetchNewsData(String requestUrl) {
+    public static List<News> fetchNewsData(String requestUrl) throws JSONException {
 
         URL url = createUrl(requestUrl);
 
@@ -77,7 +77,7 @@ public class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving Guardian news.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -103,59 +103,33 @@ public class QueryUtils {
         return output.toString();
     }
 
-    private static List<News> extractFeatureFromJson(String newsJSON) {
+    private static List<News> extractFeatureFromJson(String newsJSON) throws JSONException {
         if (TextUtils.isEmpty(newsJSON)) {
             return null;
         }
         List<News> newsList = new ArrayList<>();
 
-        //TODO fix the JSON response to fit my response... take a look at the github online
-
         try{
-            JSONObject baseJsonResponse = new JSONObject(newsJSON);
+            JSONObject baseJsonObject = new JSONObject(newsJSON);
 
-            JSONArray news = baseJsonResponse.getJSONArray("response");
+            JSONObject response = baseJsonObject.getJSONObject("response");
 
-            JSONArray result = news.getJSONArray("results");
+            JSONArray result = response.getJSONArray("results");
 
-            for (int i = 0; i < result.length(); i++) {
+            for (int i = 0; i < result.length(); i++){
                 JSONObject newsObject = result.getJSONObject(i);
+
                 String title = newsObject.getString("webTitle");
-                String webUrl = newsObject.getString("webUrl");
-                String author = "N/A";
-                String[] authorsArray = new String[]{};
-                List<String> authorsList = new ArrayList<>();
+                String type = newsObject.getString("type");
+                String url = newsObject.getString("webUrl");
 
-                JSONArray tagsArray = newsObject.getJSONArray("tags");
+                News news = new News(title, type, url);
 
-                for (int j = 0; j < tagsArray.length(); j++) {
-                    JSONObject tagsObject = tagsArray.getJSONObject(j);
-                    String firstName = tagsObject.optString("firstName");
-                    String lastName = tagsObject.optString("lastName");
-                    String authorName;
-                    if (TextUtils.isEmpty(firstName)) {
-                        authorName = lastName;
-                    } else {
-                        authorName = firstName + " " + lastName;
-                    }
-                    authorsList.add(authorName);
-                }
-
-                if (authorsList.size() == 0) {
-                    author = "N/A";
-                } else {
-                    author = TextUtils.join(", ", authorsList);
-                }
-
-                News news = new News(title, type, date, url);
                 newsList.add(news);
             }
-        } catch (JSONException e) {
-            Log.e("QueryUtils", "Problem parsing the news JSON results", e);
+            } catch (JSONException e){
+            Log.e("Queryutils", "Error parsing JSON response", e);
         }
         return newsList;
-    }
-
-}
     }
 }
